@@ -1,11 +1,8 @@
-from flask import Flask
+from main import app
 
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Hello from your CI/CD pipeline deployed on Render!"
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=10000)
+def test_home_route():
+    tester = app.test_client()
+    response = tester.get('/')
+    assert response.status_code == 200
+    assert b"Hello from your CI/CD pipeline deployed on Render!" in response.data
 
